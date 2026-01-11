@@ -2,4 +2,6 @@ pandas
 seaborn
 numpy
 scikit_learn
+ipykernel
+dill
 -e .
