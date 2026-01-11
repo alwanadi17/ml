@@ -1,4 +1,5 @@
-import src.logger as logging
+import logging
+import src.logger
 from src.exception import CustomException
 
 import os
