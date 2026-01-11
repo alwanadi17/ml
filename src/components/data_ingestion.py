@@ -22,24 +22,25 @@ class DataIngestion:
         logging.info('Data Ingestion methods Starts')
         try:
             df = pd.read_csv('notebook/data/data.csv')
-            logging.info('Dataset read as pandas DataFrame')
+            logging.info('Dataset read as pandas DataFrame at notebook/data/data.csv')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
 
             df.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
+            logging.info(f"Raw data is saved at {self.ingestion_config.raw_data_path}")
 
-            logging.info("Train test split")
+            logging.info("Train test split 80-20")
             train_set, test_set = train_test_split(df, test_size=0.2, random_state=42)
 
             train_set.to_csv(self.ingestion_config.train_data_path, index=False, header=True)
-
             test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
 
-            logging.info("Ingestion of Data is completed")
+            logging.info(f"Ingestion of train test data is completed with files saved at {self.ingestion_config.train_data_path} and {self.ingestion_config.test_data_path}")
 
             return (
                 self.ingestion_config.train_data_path,
                 self.ingestion_config.test_data_path,
             )
         except Exception as e:
+            logging.error(f"Error occured at Data Ingestion stage: {e}")
             raise CustomException(e, sys)
