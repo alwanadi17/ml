@@ -43,19 +43,15 @@ class CustomFeatureAdder(BaseEstimator, TransformerMixin):
         return X_df
     
     def get_feature_names_out(self, input_features=None):
-        logging.info("Getting feature names...")
-
         if input_features is None or len(input_features) == 0:
             feature_names = self.feature_names_in_.copy()
         else:
             feature_names = list(input_features)
 
         if 'id' in feature_names:
-            logging.info("Dropping id feature name...")
             feature_names.remove('id')
 
         if self.add_focus_index:
-            logging.info("add_focus_index == True, adding new feature names...")
             feature_names.extend(['academic_effort', 'academic_focus_seconds', 'productivity'])
 
         return np.array(feature_names)
@@ -98,7 +94,8 @@ class DataTransformation:
                 ]
             )
 
-            logging.info("Preprocessor Pipeline Initiated, Column Transformer with automatic feature selection initiated")
+            logging.info("Preprocessor Pipeline Initiated")
+            logging.info("Column Transformer with automatic feature selection initiated")
 
             return preprocessor
         
@@ -127,7 +124,8 @@ class DataTransformation:
             input_feature_test_arr = preprocessor.transform(input_feature_test_df)
 
             feature_names = preprocessor.get_feature_names_out()
-            logging.info(f"Data Transformation Completed with feature names: {feature_names}")
+            logging.info(f"Data Transformation Completed with feature names:")
+            logging.info(f"{feature_names}")
 
             train_arr = np.c_[np.array(input_feature_train_arr), np.array(target_feature_train_df)]
             test_arr = np.c_[np.array(input_feature_test_arr), np.array(target_feature_test_df)]
