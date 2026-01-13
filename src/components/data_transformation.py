@@ -126,6 +126,9 @@ class DataTransformation:
             input_feature_train_arr = preprocessor.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessor.transform(input_feature_test_df)
 
+            feature_names = preprocessor.get_feature_names_out()
+            logging.info(f"Data Transformation Completed with feature names: {feature_names}")
+
             train_arr = np.c_[np.array(input_feature_train_arr), np.array(target_feature_train_df)]
             test_arr = np.c_[np.array(input_feature_test_arr), np.array(target_feature_test_df)]
 
