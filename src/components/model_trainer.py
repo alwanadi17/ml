@@ -10,11 +10,7 @@ from src.utils import save_object, evaluate_models
 import numpy as np
 import pandas as pd
 
-from sklearn.ensemble import (
-    AdaBoostRegressor,
-    HistGradientBoostingRegressor,
-    RandomForestRegressor,
-)
+from sklearn.ensemble import HistGradientBoostingRegressor
 import yaml
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.linear_model import LinearRegression
