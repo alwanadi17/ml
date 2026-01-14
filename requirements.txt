@@ -1,7 +1,10 @@
 pandas
 seaborn
 numpy
-scikit_learn
+scikit-learn==1.5.2
 ipykernel
 dill
+xgboost
+catboost
+pyyaml
 -e .

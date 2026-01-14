@@ -219,3 +219,4 @@ __marimo__/
 *.pyc
 .DS_Store
 artifacts/
+catboost_info/
