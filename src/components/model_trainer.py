@@ -73,12 +73,3 @@ class ModelTrainer:
             logging.error(f"Error occured at model trainer stage: {e}")
             raise CustomException(e, sys)
         
-
-from src.components.data_ingestion import DataIngestion
-from src.components.data_transformation import DataTransformation
-
-if __name__ == "__main__":
-    train_path, test_path = DataIngestion().initiate_data_ingestion()
-    train_arr, test_arr, _ = DataTransformation().initiate_data_transformation(train_path, test_path)
-    best_model_name, best_model_score = ModelTrainer().initiate_model_trainer(train_arr, test_arr, _)
-    logging.info(f"Best Model: {best_model_name} with score: {best_model_score}")
