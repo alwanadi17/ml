@@ -1,14 +1,12 @@
 import os
 import sys
-
+import dill
+import csv
 import numpy as np
 import pandas as pd
 
-import dill
-
 from src.exception import CustomException
-import logging
-import src.logger
+from src.logger import logging
 
 from sklearn.metrics import r2_score
 from sklearn.model_selection import RandomizedSearchCV
@@ -27,6 +25,20 @@ def save_object(file_path, obj):
     except Exception as e:
         logging.error(f"Error occured at save_object stage: {e}")
         raise CustomException(e, sys)
+    
+
+def load_object(file_path):
+    try:
+        with open(file_path, "rb") as file_obj:
+            obj = dill.load(file_obj)
+        
+        logging.info(f"Object loaded from {file_path}")
+        return obj
+
+    except Exception as e:
+        logging.error(f"Error occured at load_object stage: {e}")
+        raise CustomException(e, sys)
+
     
 def evaluate_models(X_train, y_train, X_test, y_test, models, params):
     try:
@@ -90,4 +102,25 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, params):
     
     except Exception as e:
         logging.error(f"Error occured at evaluate_models stage: {e}")
+        raise CustomException(e, sys)
+    
+    
+def save_user_input(data_dict, file_path="artifacts/user_input_logs.csv"):
+    try:
+        dir_path = os.path.dirname(file_path)
+        os.makedirs(dir_path, exist_ok=True)
+
+        file_exists = os.path.isfile(file_path)
+
+        with open(file_path, 'a') as f:
+            writer = csv.DictWriter(f, fieldnames=data_dict.keys())
+            if not file_exists:
+                writer.writeheader()
+
+            writer.writerow(data_dict)
+        
+        logging.info(f"User input data saved at {file_path}")
+
+    except Exception as e:
+        logging.error(f"Error occured at save_user_input stage: {e}")
         raise CustomException(e, sys)

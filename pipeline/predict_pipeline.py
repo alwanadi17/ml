@@ -1,16 +1,17 @@
 from src.logger import logging
 from src.exception import CustomException
+import traceback
 import os
 import sys
 
-from src.utils import load_object
+from src.utils import load_object, save_user_input
 import pandas as pd
 
 class PredictPipeline:
     def __init__(self):
         pass
 
-    def predict(self, features):
+    def predict(self, data):
         try:
             preprocessor_path = os.path.join("artifacts", "preprocessor.pkl")
             model_path = os.path.join("artifacts", "model.pkl")
@@ -18,28 +19,43 @@ class PredictPipeline:
             preprocessor = load_object(preprocessor_path)
             model = load_object(model_path)
 
+            features = pd.DataFrame(data)
+            cols_order = ['id', 'age', 'gender', 'course', 'study_hours', 
+                      'class_attendance', 'internet_access', 'sleep_hours', 
+                      'sleep_quality', 'study_method', 'facility_rating', 'exam_difficulty']
+            features = features[cols_order]
+
             data_scaled = preprocessor.transform(features)
 
             preds = model.predict(data_scaled)
+
+            tmp = features.copy()
+
+            tmp['exam_score'] = preds
+            features_dict = tmp.to_dict(orient='records')[0]
+            save_user_input(features_dict)
             return preds
 
         except Exception as e:
+            logging.error(traceback.format_exc())
             logging.error(f"Error occured in prediction pipeline: {e}")
             raise CustomException(e, sys)
         
 class CustomData:
     def __init__(self,
-                 age: float,
-                 gender: float,
-                 course: float,
+                 id: int,
+                 age: int,
+                 gender: object,
+                 course: object,
                  study_hours: float,
                  class_attendance: float,
-                 internet_access: float,
+                 internet_access: object,
                  sleep_hours: float,
-                 sleep_quality: float,
-                 study_method: float,
-                 facility_rating: float,
-                 exam_difficulty: float):
+                 sleep_quality: object,
+                 study_method: object,
+                 facility_rating: object,
+                 exam_difficulty: object):
+        self.id = id
         self.age = age
         self.gender = gender
         self.course = course
@@ -55,6 +71,7 @@ class CustomData:
     def get_data_as_dataframe(self):
         try:
             custom_data_input_dict = {
+                "id": [self.id],
                 "age": [self.age],
                 "gender": [self.gender],
                 "course": [self.course],

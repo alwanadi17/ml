@@ -28,12 +28,11 @@ class CustomFeatureAdder(BaseEstimator, TransformerMixin):
         return self
 
     def transform(self, X):
-        X_df = X.copy()
+        X_df = pd.DataFrame(X, columns=self.feature_names_in_).copy()
 
         if 'id' in X_df.columns:
-            logging.info("Dropping id column...")
-            X_df.drop(columns=['id'], inplace=True)
-
+            X_df = X_df.drop(columns=['id'], axis=1) 
+            
         if self.add_focus_index:
             logging.info("add_focus_index == True, adding new features...")
             X_df['academic_effort'] = X_df['study_hours'] * X_df['class_attendance']

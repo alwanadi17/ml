@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Hello, world!</h1>
+
+      <div class="container">
+        <form action={{ url_for('predict')}} method="POST">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Age</label>
+            <input type="number" step="1" class="form-control" id="age" name="age" aria-describedby="emailHelp" min="0" required>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Gender</label>
+            <select class="form-select" aria-label="Default select example" id="gender" name="gender" required>
+              <option selected value="male">male</option>
+              <option value="female">female</option>
+              <option value="other">other</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Course</label>
+            <select class="form-select" aria-label="Default select example" id="course" name="course" required>
+              <option selected value="b.sc">b.sc</option>
+              <option value="diploma">diploma</option>
+              <option value="bca">bca</option>
+              <option value="b.com">b.com</option>
+              <option value="ba">ba</option>
+              <option value="bba">bba</option>
+              <option value="b.tech">b.tech</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Study Hours</label>
+            <input type="number" step="any" class="form-control" id="study_hours" name="study_hours" aria-describedby="emailHelp" min="0" required>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">class_attendance</label>
+            <input type="number" class="form-control" id="class_attendance" name="class_attendance" aria-describedby="emailHelp" min="0" required>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">internet_access</label>
+            <select class="form-select" aria-label="Default select example" id="internet_access" name="internet_access" required>
+              <option selected value="no">no</option>
+              <option value="yes">yes</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">sleep_hours</label>
+            <input type="number" step="any" class="form-control" id="sleep_hours" name="sleep_hours" aria-describedby="emailHelp" min="0" required>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">sleep_quality</label>
+            <select class="form-select" aria-label="Default select example" id="sleep_quality" name="sleep_quality" required>
+              <option selected value="average">average</option>
+              <option value="poor">poor</option>
+              <option value="good">good</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">study_method</label>
+            <select class="form-select" aria-label="Default select example" id="study_method" name="study_method" required>
+              <option selected value="online videos">online videos</option>
+              <option value="self-study">self-study</option>
+              <option value="coaching">coaching</option>
+              <option value="group study">group study</option>
+              <option value="mixed">mixed</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">facility_rating</label>
+            <select class="form-select" aria-label="Default select example" id="facility_rating" name="facility_rating" required>
+              <option selected value="low">low</option>
+              <option value="medium">medium</option>
+              <option value="high">high</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">exam_difficulty</label>
+            <select class="form-select" aria-label="Default select example" id="exam_difficulty" name="exam_difficulty" required>
+              <option selected value="easy">easy</option>
+              <option value="moderate">moderate</option>
+              <option value="hard">hard</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      {% if results %}
+        <h2>Predicted Exam Score: </h2>
+        <h2>{{ results }}</h2>
+      {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+</html>

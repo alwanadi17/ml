@@ -7,4 +7,5 @@ dill
 xgboost
 catboost
 pyyaml
+flask
 -e .
